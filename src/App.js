@@ -1,6 +1,6 @@
 import './App.css';
 import './style/Countdown.css';
-// import Countdown from './components/Countdown';
+
 import CountdownFunc from './components/CountdownFunc';
 import { Canvas } from '@react-three/fiber';
 
@@ -14,9 +14,9 @@ function App() {
       <div className="content">
         
         <Canvas
-          style={{height: "70vh"}}
+          
         >
-          <CountdownFunc date='2023-09-16T08:02:00'/>
+          <CountdownFunc date='2023-09-17T08:22:00'/>
           
           
         </Canvas>

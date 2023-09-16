@@ -23,7 +23,10 @@ The below component was designed to count down the days until our CTO's birthday
 * How would you make this countdown more aesthetically pleasing?
   * I plan on using R3F to bring in 3D elements to the countdown, along with color. It is a birthday timer at the end of the day.
 * Trust your design instincts, and explain how your design choices impact the user experience
-  * 
+  * I chose colors that were brighter, since this is a birthday countdown. I chose to have the seconds 3DText be closer to to user since
+  * that component changes every second. I believe this was a way to signal urgency as stated above. I did not get to finish implementing a 
+  * physics effect that would have the number and correspending unit fall on the rigidBody below it once it zeroed out and the unit to the 
+  * left was also zeroed out/non-existent. 
 
 ## Getting Started with Create React App
 

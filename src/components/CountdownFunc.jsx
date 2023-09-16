@@ -14,10 +14,6 @@ const CountdownFunc = (props) => {
         past: false
     })
 
-    // const [depleted, setDepleted ] = useState({
-    //     days: false
-    // })
-
     useEffect(() => {
         const calculateCountdown = (endDate) => {
             let diff = (Date.parse(new Date(endDate)) -Date.parse(new Date())) / 1000
@@ -107,20 +103,20 @@ const CountdownFunc = (props) => {
                     <group>
                 <Physics gravity={[0, -9.08, 0]}>
                         <group>
-                            <ThreeDText text={addLeadingZeros(countDown.days)} position={[-10,0,0]} grav={false}/>
-                            <ThreeDText text={'Days'} position={[-10,-1,0]} scale={0.5}/>
+                            <ThreeDText text={addLeadingZeros(countDown.days)} position={[-7,0,0]} />
+                            <ThreeDText text={'Days'} position={[-7,-1,0]} scale={0.5}/>
                         </group>
                         <group>
-                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[-7,0,0.5]} />
-                            <ThreeDText text={'Hours'} position={[-7,-1,0.5]} scale={0.5} />
+                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[-4,0,0.5]} />
+                            <ThreeDText text={'Hours'} position={[-4,-1,0.5]} scale={0.5} />
                         </group>
                         <group>
-                            <ThreeDText text={addLeadingZeros(countDown.min)} position={[-3,0,1]} />
-                            <ThreeDText text={'Minutes'} position={[-3,-1,1]} scale={0.5} />
+                            <ThreeDText text={addLeadingZeros(countDown.min)} position={[-1,0,1]} />
+                            <ThreeDText text={'Minutes'} position={[-1,-1,1]} scale={0.5} />
                         </group>
                         <group>
                             <ThreeDText text={addLeadingZeros(countDown.sec)} position={[2,0,1.5]} />
-                            <ThreeDText text={'Seconds'} position={[2,-1,1.5]} scale={0.75} />
+                            <ThreeDText text={'Seconds'} position={[2,-1,1.5]} scale={0.55} />
                         </group>
                         <RigidBody
                         type="fixed"
