@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import ThreeDText from "./ThreeDText"
-import { Center, OrbitControls } from "@react-three/drei"
+import { Center, OrbitControls, ContactShadows, Text3D } from "@react-three/drei"
 import ExplosionConfetti from "./Confetti"
+import { Physics, RigidBody } from "@react-three/rapier"
 
 
 const CountdownFunc = (props) => {
@@ -12,6 +13,10 @@ const CountdownFunc = (props) => {
         sec: 0, 
         past: false
     })
+
+    // const [depleted, setDepleted ] = useState({
+    //     days: false
+    // })
 
     useEffect(() => {
         const calculateCountdown = (endDate) => {
@@ -67,12 +72,27 @@ const CountdownFunc = (props) => {
         }
         return value
     }
+
+    
+
     //if/when timer has runout this component will be rendered
     if(countDown.past) {
         return <>
             <Center>
                 <ExplosionConfetti isExploding={true}/>
-                <ThreeDText text={'! HAPPY BIRTHDAY !'} />
+                <Text3D
+                font="/helvetiker_regular.typeface.json"
+                position={[-6,0,0]}
+                curveSegments={ 12 }
+                bevelEnabled
+                bevelThickness={ 0.02 }
+                bevelSize={ 0.02 }
+                bevelOffset={ 0 }
+                bevelSegments={ 5 }
+                >
+                    HAPPY BIRTHDAY !
+                    <meshNormalMaterial />
+            </Text3D>
             </Center>
         </>
     }
@@ -80,25 +100,47 @@ const CountdownFunc = (props) => {
     return <>
             <OrbitControls />
             <color args ={ [ '#AFEEEE']} attach="background" />
+            <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 3.5 } />
             <ambientLight intensity={ 0.5 } />
 
             <Center>
-                <group>
-                    <ThreeDText text={addLeadingZeros(countDown.days)} position={[-12,0,0]} />
-                    <ThreeDText text={'Days'} position={[-12,-1,0]} scale={0.5}/>
-                </group>
-                <group>
-                    <ThreeDText text={addLeadingZeros(countDown.hours)} position={[-7,0,0.5]} />
-                    <ThreeDText text={'Hours'} position={[-7,-1,0.5]} scale={0.5} />
-                </group>
-                <group>
-                    <ThreeDText text={addLeadingZeros(countDown.min)} position={[-3,0,1]} />
-                    <ThreeDText text={'Minutes'} position={[-3,-1,1]} scale={0.5} />
-                </group>
-                <group>
-                    <ThreeDText text={addLeadingZeros(countDown.sec)} position={[2,0,1.5]} />
-                    <ThreeDText text={'Seconds'} position={[2,-1,1.5]} scale={0.75} />
-                </group>
+                    <group>
+                <Physics gravity={[0, -9.08, 0]}>
+                        <group>
+                            <ThreeDText text={addLeadingZeros(countDown.days)} position={[-10,0,0]} grav={false}/>
+                            <ThreeDText text={'Days'} position={[-10,-1,0]} scale={0.5}/>
+                        </group>
+                        <group>
+                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[-7,0,0.5]} />
+                            <ThreeDText text={'Hours'} position={[-7,-1,0.5]} scale={0.5} />
+                        </group>
+                        <group>
+                            <ThreeDText text={addLeadingZeros(countDown.min)} position={[-3,0,1]} />
+                            <ThreeDText text={'Minutes'} position={[-3,-1,1]} scale={0.5} />
+                        </group>
+                        <group>
+                            <ThreeDText text={addLeadingZeros(countDown.sec)} position={[2,0,1.5]} />
+                            <ThreeDText text={'Seconds'} position={[2,-1,1.5]} scale={0.75} />
+                        </group>
+                        <RigidBody
+                        type="fixed"
+                        restitution={ 0 }
+                        friction={ 0.7 }
+                    >
+                    <mesh receiveShadow position-y={ - 2.25 }>
+                        <boxGeometry args={ [ 20, 0.5, 10 ] } />
+                        <meshStandardMaterial color="greenyellow" />
+                    </mesh>
+                </RigidBody>
+
+                </Physics>
+                    </group>
+                <ContactShadows
+                    position-y={ -1.99 }
+                    opacity={ 0.4 }
+                    scale={ 29 }
+                    blur={ 0.4 }
+                />
             </Center>
         </>
 } 

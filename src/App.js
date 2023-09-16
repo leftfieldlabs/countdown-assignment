@@ -16,7 +16,7 @@ function App() {
         <Canvas
           style={{height: "70vh"}}
         >
-          <CountdownFunc date='2023-12-24T00:00:00'/>
+          <CountdownFunc date='2023-09-16T08:02:00'/>
           
           
         </Canvas>
