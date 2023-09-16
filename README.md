@@ -6,14 +6,24 @@ The below component was designed to count down the days until our CTO's birthday
 **Do a critique:** The current implementation isn't perfect. How could it be improved?
 
 * Pick an area of improvement to implement.
+  * I will be improving the User Facing component of the countdown, making it more engaging.
 * What would happen to the current code if the date were changed, the page layout was changed or the format was changed?
+  * The current code only allows the date to be changed by the programmer since it is hard coded. 
+  * If the page layout was changed there needs to be styling applied to the App, since there is basically no css for the website to adhere to. 
+  * As far as formatting changes, the format of the data that is input for the date props does not have any error handlers in case it is not input correctly. Incorrect inputs would break the app.
 * Does the current implementation follow best practices for HTML, CSS, JS and React?
+  * There is no HTML unless you count jsx, CSS needs to have more styling, as well as mobile friendly styling/media queries to ensure proper styling on mobile. 
+  * There is one hard coded value for the date which is not a best practice. 
+  * Although there is nothing logically wrong with using a class based react component, functional components offer better simplicity and readability, and more libraries and tools are optomized for a React app built using functional components.
 
 **Spice it up:** Let's be honest, this countdown could be a whole lot more exciting.
 
 * What could you do to create a greater sense of urgency?
+  * I think the size, and color of the timer numbers could set the tone as the timer ends. 
 * How would you make this countdown more aesthetically pleasing?
+  * I plan on using R3F to bring in 3D elements to the countdown, along with color. It is a birthday timer at the end of the day.
 * Trust your design instincts, and explain how your design choices impact the user experience
+  * 
 
 ## Getting Started with Create React App
 
