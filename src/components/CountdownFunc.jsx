@@ -57,7 +57,14 @@ const CountdownFunc = (props) => {
     }
 
     return <>
-        <h1>Functional Component</h1>
+        <h2>{addLeadingZeros(countDown.days)}</h2>
+        <p>Days</p>
+        <h2>{addLeadingZeros(countDown.hours)}</h2>
+        <p>Hours</p>
+        <h2>{addLeadingZeros(countDown.min)}</h2>
+        <p>Minutes</p>
+        <h2>{addLeadingZeros(countDown.sec)}</h2>
+        <p>Seconds</p>
     </>
 } 
 export default CountdownFunc
