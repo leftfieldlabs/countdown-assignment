@@ -1,6 +1,6 @@
 import { Text3D } from "@react-three/drei";
 
-const ThreeDText = ({text, position}) => {
+const ThreeDText = ({text, position,scale}) => {
 
     return <>
         <Text3D
@@ -13,8 +13,10 @@ const ThreeDText = ({text, position}) => {
             bevelSize={ 0.02 }
             bevelOffset={ 0 }
             bevelSegments={ 5 }
+            scale={scale || 1}
         >
             {text}
+            <meshNormalMaterial />
         </Text3D>
     </>
 }
