@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ThreeDText from "./ThreeDText"
 import { Center, OrbitControls } from "@react-three/drei"
+import ExplosionConfetti from "./Confetti"
 
 
 const CountdownFunc = (props) => {
@@ -70,6 +71,7 @@ const CountdownFunc = (props) => {
     if(countDown.past) {
         return <>
             <Center>
+                <ExplosionConfetti isExploding={true}/>
                 <ThreeDText text={'! HAPPY BIRTHDAY !'} />
             </Center>
         </>
