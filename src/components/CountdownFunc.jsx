@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react"
 import ThreeDText from "./ThreeDText"
 import { Center, OrbitControls, ContactShadows } from "@react-three/drei"
-import { useThree } from "@react-three/fiber"
 import { Physics, RigidBody } from "@react-three/rapier"
 import BirthdayText from "./BirthdayText"
-
 
 const CountdownFunc = (props) => {
     const [countDown, setCountDown] = useState({
@@ -19,6 +17,8 @@ const CountdownFunc = (props) => {
         secDepleted: false,
         past: false
     })
+
+    const [isLoaded, setIsLoaded] = useState(false)
 
     useEffect(() => {
         const calculateCountdown = (endDate) => {
@@ -88,6 +88,7 @@ const CountdownFunc = (props) => {
             } else {
                 setCountDown((prevState) => ({ ...prevState, past: true }));
             }
+            setIsLoaded(true)
         }, 1000);
         return () => clearInterval(interval)
     }, [props.date]) //rerender each time date changes, will be every second
@@ -99,27 +100,20 @@ const CountdownFunc = (props) => {
         }
         return value
     }
-    // const screenWidth = window.innerWidth/120
-
-    // console.log(screenWidth*120)
-    // const {camera} = useThree()
-    // camera.position.set(0,0,screenWidth)
-
-    
     //if/when timer has runout this component will be rendered
-    if(countDown.past) {
+    if(countDown.past ) {
         return <>
             <BirthdayText />
         </>
     }
-    else 
-    console.log(countDown)
+    else if (isLoaded) {
+
     return <>
             <OrbitControls />
             <color args ={ [ '#AFEEEE']} attach="background" />
             <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 3.5 } />
             <ambientLight intensity={ 0.5 } />
-            <camera />
+            
 
             <Center>
                     <group >
@@ -162,5 +156,7 @@ const CountdownFunc = (props) => {
                 />
             </Center>
         </>
+    }
+    
 } 
 export default CountdownFunc;
