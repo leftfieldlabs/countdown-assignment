@@ -20,7 +20,7 @@ function App() {
             position: [ 0, 0, 18]
           }}
         >
-          <CountdownFunc date='2023-09-21T18:34:30'/>
+          <CountdownFunc date='2023-09-23T18:34:30'/>
         </Canvas>
       </div>
     </div>

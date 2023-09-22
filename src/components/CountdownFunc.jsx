@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ThreeDText from "./ThreeDText"
 import { Center, OrbitControls, ContactShadows } from "@react-three/drei"
+import { useThree } from "@react-three/fiber"
 import { Physics, RigidBody } from "@react-three/rapier"
 import BirthdayText from "./BirthdayText"
 
@@ -91,12 +92,6 @@ const CountdownFunc = (props) => {
         return () => clearInterval(interval)
     }, [props.date]) //rerender each time date changes, will be every second
 
-    useEffect(() => {
-        if (countDown.minDepleted) {
-            console.log("minDepleted is true");
-        }
-    }, [countDown.minDepleted]);
-
     const addLeadingZeros = (value) => {
         value = String(value)
         while (value.length < 2) {
@@ -104,6 +99,11 @@ const CountdownFunc = (props) => {
         }
         return value
     }
+    // const screenWidth = window.innerWidth/120
+
+    // console.log(screenWidth*120)
+    // const {camera} = useThree()
+    // camera.position.set(0,0,screenWidth)
 
     
     //if/when timer has runout this component will be rendered
@@ -129,8 +129,8 @@ const CountdownFunc = (props) => {
                             <ThreeDText text={'Days'} position={[-2,-1,0]} scale={0.5} grav={countDown.daysDepleted} />
                         </group>
                         <group key={2 + countDown.hoursDepleted}>
-                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[0,0,0.3]} grav={countDown.hoursDepleted}/>
-                            <ThreeDText text={'Hours'} position={[0,-1,0.5]} scale={0.5} grav={countDown.hoursDepleted} />
+                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[1,0,0.3]} grav={countDown.hoursDepleted}/>
+                            <ThreeDText text={'Hours'} position={[1,-1,0.5]} scale={0.5} grav={countDown.hoursDepleted} />
                         </group>
                         <group key={3 + countDown.minDepleted}  >
                             <ThreeDText text={addLeadingZeros(countDown.min)} position={[-3,3,0.9]} grav={countDown.minDepleted} />
