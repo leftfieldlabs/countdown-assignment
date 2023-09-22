@@ -48,11 +48,13 @@ const Calendar = ({ onDateChange }) => {
         );
     } else {
         return (
-            <div className="calendar" style={{display: 'flex', flexDirection: 'column'}}>
+            <div className="calendar" style={{display: 'flex', flexDirection: 'column', textAlign: 'center'}}>
                 <h1>Countdown App</h1>
                 <button onClick={() => setCalendarOpen(true)}>Pick A Date To Get Started</button>
-                <p>This countdown has physics based effects that drop the UI <br/> 
-                containing a completely depleted time measurement. <br/>
+                <p
+                    style={{maxWidth: '35vw'}}
+                >This countdown has physics based effects that drop the UI  
+                containing a completely depleted time measurement. 
                 Choose a date and time not too far away to see these effects.</p>
             </div>
         )
