@@ -24,9 +24,9 @@ The below component was designed to count down the days until our CTO's birthday
   * I plan on using R3F to bring in 3D elements to the countdown, along with color. It is a birthday timer at the end of the day.
 * Trust your design instincts, and explain how your design choices impact the user experience
   * I chose colors that were brighter, since this is a birthday countdown. I chose to have the seconds 3DText be closer to to user since
-  * that component changes every second. I believe this was a way to signal urgency as stated above. I did not get to finish implementing a 
-  * physics effect that would have the number and correspending unit fall on the rigidBody below it once it zeroed out and the unit to the 
-  * left was also zeroed out/non-existent. 
+  * that component changes every second. I believe this was a way to signal urgency as stated above. The physics effects
+  * help convey urgency by literally having time elements come crashing down infront of the user as they run out.
+  * One last thing I will come back to because I enjoyed this assignment is some transitions with the spring library.
 
 ## Getting Started with Create React App
 

@@ -33,6 +33,11 @@ body,
   border-radius: 10px;
 }
 
+p {
+  padding: 1vh;
+  line-height: 1.5;
+}
+
 /* Button Styling */
 button {
   font-size: 1.5vw; /* Adjust based on your preference */
