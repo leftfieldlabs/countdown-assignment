@@ -9,7 +9,7 @@ const BirthdayText = () => {
                 <ExplosionConfetti isExploding={true}/>
                 <Text3D
                 font="/helvetiker_regular.typeface.json"
-                position={[-6,0,0]}
+                position={[-3.5,0,0]}
                 curveSegments={ 12 }
                 bevelEnabled
                 bevelThickness={ 0.02 }

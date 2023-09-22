@@ -40,6 +40,7 @@ const Calendar = ({ onDateChange }) => {
                         minDate={new Date()}
                         minTime={isToday ? new Date().setHours(currentHour, currentMinute) : undefined}
                         maxTime={isToday ? new Date().setHours(23, 59) : undefined}
+                        
                     />
                     <button type="submit">Confirm Date</button>
                 </form>
