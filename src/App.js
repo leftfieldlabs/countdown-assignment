@@ -8,17 +8,19 @@ import { Canvas } from '@react-three/fiber';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      {/* <header className="App-header">
         <h1>Countdown</h1>
-      </header>
+      </header> */}
       <div className="content">
-        
         <Canvas
-          
+          camera={{
+            fov:45,
+            near: 0.1,
+            far: 200,
+            position: [ 0, 0, 18]
+          }}
         >
-          <CountdownFunc date='2023-09-17T08:22:00'/>
-          
-          
+          <CountdownFunc date='2023-09-21T18:34:30'/>
         </Canvas>
       </div>
     </div>

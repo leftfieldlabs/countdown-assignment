@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react"
 import ThreeDText from "./ThreeDText"
-import { Center, OrbitControls, ContactShadows, Text3D } from "@react-three/drei"
-import ExplosionConfetti from "./Confetti"
+import { Center, OrbitControls, ContactShadows } from "@react-three/drei"
 import { Physics, RigidBody } from "@react-three/rapier"
+import BirthdayText from "./BirthdayText"
 
 
 const CountdownFunc = (props) => {
     const [countDown, setCountDown] = useState({
+        years: 0,
         days: 0, 
+        daysDepleted: false,
         hours: 0,
+        hoursDepleted: false,
         min: 0, 
+        minDepleted: false,
         sec: 0, 
+        secDepleted: false,
         past: false
     })
 
@@ -25,20 +30,32 @@ const CountdownFunc = (props) => {
 
                 const timeLeft = {
                     years: 0,
-                    days: 0,
+                    days: 0, 
+                    daysDepleted: 0,
                     hours: 0,
-                    min: 0,
-                    sec: 0,
-                    millisec: 0,
+                    hoursDepleted: 0,
+                    min: 0, 
+                    minDepleted: 0,
+                    sec: 0, 
+                    secDepleted: 0,
+                    past: false
                 }
                 
                 if (diff >= 365.25 * 86400) {
                     timeLeft.years = Math.floor(diff / (365.25 * 86400));
                     diff -= timeLeft.years * 365.25 * 86400;
+                    
                 }
                 if (diff >= 86400) {
                     timeLeft.days = Math.floor(diff / 86400);
                     diff -= timeLeft.days * 86400;
+
+                    if (timeLeft.days === 0) {
+                        setCountDown((prevState) => ({
+                            ...prevState,
+                            daysDepleted: true,
+                        }));
+                    }
                 }
                 if (diff >= 3600) {
                     timeLeft.hours = Math.floor(diff / 3600);
@@ -55,11 +72,30 @@ const CountdownFunc = (props) => {
             
         }
         const interval = setInterval(() => {
-            const date = calculateCountdown(props.date)
-            date ? setCountDown(date) : setCountDown((prevState) => ({...prevState, past: true})) //once the timer runs out past will evaluate to true
-        }, 1000)
+            const date = calculateCountdown(props.date);
+            
+            if (date) {
+                setCountDown(prevState => {
+                    return {
+                        ...date,
+                        daysDepleted: date.days === 0 ? 1.1 : 0,
+                        hoursDepleted: date.days === 0 && date.hours === 0 ? 1.05 : 0,
+                        minDepleted: date.days === 0 && date.hours === 0 && date.min === 0 ? 1.08 : 0,
+                        secDepleted: date.days === 0 && date.hours === 0 && date.min === 0 && date.sec === 0 ? 1.15 : 0,
+                    };
+                });
+            } else {
+                setCountDown((prevState) => ({ ...prevState, past: true }));
+            }
+        }, 1000);
         return () => clearInterval(interval)
     }, [props.date]) //rerender each time date changes, will be every second
+
+    useEffect(() => {
+        if (countDown.minDepleted) {
+            console.log("minDepleted is true");
+        }
+    }, [countDown.minDepleted]);
 
     const addLeadingZeros = (value) => {
         value = String(value)
@@ -70,59 +106,46 @@ const CountdownFunc = (props) => {
     }
 
     
-
     //if/when timer has runout this component will be rendered
     if(countDown.past) {
         return <>
-            <Center>
-                <ExplosionConfetti isExploding={true}/>
-                <Text3D
-                font="/helvetiker_regular.typeface.json"
-                position={[-6,0,0]}
-                curveSegments={ 12 }
-                bevelEnabled
-                bevelThickness={ 0.02 }
-                bevelSize={ 0.02 }
-                bevelOffset={ 0 }
-                bevelSegments={ 5 }
-                >
-                    HAPPY BIRTHDAY !
-                    <meshNormalMaterial />
-            </Text3D>
-            </Center>
+            <BirthdayText />
         </>
     }
     else 
+    console.log(countDown)
     return <>
             <OrbitControls />
             <color args ={ [ '#AFEEEE']} attach="background" />
             <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 3.5 } />
             <ambientLight intensity={ 0.5 } />
+            <camera />
 
             <Center>
-                    <group>
+                    <group >
                 <Physics gravity={[0, -9.08, 0]}>
-                        <group>
-                            <ThreeDText text={addLeadingZeros(countDown.days)} position={[-7,0,0]} />
-                            <ThreeDText text={'Days'} position={[-7,-1,0]} scale={0.5}/>
+                        <group key={1 + countDown.daysDepleted}>
+                            <ThreeDText text={addLeadingZeros(countDown.days)} position={[-2,0,0]} grav={countDown.daysDepleted} />
+                            <ThreeDText text={'Days'} position={[-2,-1,0]} scale={0.5} grav={countDown.daysDepleted} />
                         </group>
-                        <group>
-                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[-4,0,0.5]} />
-                            <ThreeDText text={'Hours'} position={[-4,-1,0.5]} scale={0.5} />
+                        <group key={2 + countDown.hoursDepleted}>
+                            <ThreeDText text={addLeadingZeros(countDown.hours)} position={[0,0,0.3]} grav={countDown.hoursDepleted}/>
+                            <ThreeDText text={'Hours'} position={[0,-1,0.5]} scale={0.5} grav={countDown.hoursDepleted} />
                         </group>
-                        <group>
-                            <ThreeDText text={addLeadingZeros(countDown.min)} position={[-1,0,1]} />
-                            <ThreeDText text={'Minutes'} position={[-1,-1,1]} scale={0.5} />
+                        <group key={3 + countDown.minDepleted}  >
+                            <ThreeDText text={addLeadingZeros(countDown.min)} position={[-3,3,0.9]} grav={countDown.minDepleted} />
+                            <ThreeDText text={'Minutes'} position={[-3,2,1]} scale={0.5} grav={countDown.minDepleted} />
                         </group>
-                        <group>
-                            <ThreeDText text={addLeadingZeros(countDown.sec)} position={[2,0,1.5]} />
-                            <ThreeDText text={'Seconds'} position={[2,-1,1.5]} scale={0.55} />
+                        <group key={4 + countDown.secDepleted}>
+                            <ThreeDText text={addLeadingZeros(countDown.sec)} position={[1,3,1.3]} grav={countDown.secDepleted} />
+                            <ThreeDText text={'Seconds'} position={[0.5,2,1.5]} scale={0.55} grav={countDown.secDepleted} />
                         </group>
                         <RigidBody
                         type="fixed"
                         restitution={ 0 }
                         friction={ 0.7 }
                     >
+                    {/* the mesh below serves as a landing ground for the timer text */}
                     <mesh receiveShadow position-y={ - 2.25 }>
                         <boxGeometry args={ [ 20, 0.5, 10 ] } />
                         <meshStandardMaterial color="greenyellow" />
@@ -140,4 +163,4 @@ const CountdownFunc = (props) => {
             </Center>
         </>
 } 
-export default CountdownFunc
+export default CountdownFunc;

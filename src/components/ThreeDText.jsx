@@ -4,7 +4,7 @@ import { RigidBody } from "@react-three/rapier";
 const ThreeDText = ({text, position,scale,grav}) => {
 
     return <>
-        <RigidBody gravityScale={grav || 0}>
+        <RigidBody gravityScale={grav} friction={0.7}>
             <Text3D
                 position={position}
                 font='/helvetiker_regular.typeface.json'
