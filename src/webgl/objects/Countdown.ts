@@ -17,6 +17,8 @@ const PROPS = {
 
 export default class CountDown extends Object3D {
   text: Text;
+  isAnimateInComplete = false;
+  isAnimateClickInProgress = false;
   constructor() {
     super();
 
@@ -86,10 +88,24 @@ ${addLeadingZeros(days)}:${addLeadingZeros(hours)}:${addLeadingZeros(min)}:${add
   animateIn() {
     gsap.set(this.text.material.uniforms.opacity, { value: 1, delay: PROPS.animateIn.delay });
     gsap.to(this.text.material.uniforms.twistProgression, { value : 0, ...PROPS.animateIn })
-    gsap.to(this.text.material.uniforms.twistStrength, { value : 0, ...PROPS.animateIn })
+    gsap.to(this.text.material.uniforms.twistStrength, { value : 0, ...PROPS.animateIn, onComplete: () => {
+      this.isAnimateInComplete = true;
+    } });
+  }
+
+  animateIDLE = () => {
+    if (!this.isAnimateInComplete || this.isAnimateClickInProgress) return;
+    this.isAnimateClickInProgress = true;
+    gsap.to(this.text.material.uniforms.twistStrength, { value : 1, duration: 1 })
+    gsap.to(this.text.material.uniforms.twistStrength, { value : 0, duration: 0.8, delay: 1.5, ease: PROPS.animateIn.ease, onComplete: () => {
+      this.isAnimateClickInProgress = false;
+    } });
   }
 
   update() {
+    if (Math.random() < 0.003) {
+      this.animateIDLE();
+    }
     // this.text.material.uniforms.twistProgression.value += 0.1;
   }
 }

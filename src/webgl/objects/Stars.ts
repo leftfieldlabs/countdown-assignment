@@ -4,16 +4,10 @@ import { getRandomFloat } from 'utils';
 import { rotate, scale } from 'utils/glsl';
 
 import InstancedGeom from './InstancedGeom';
+import { COLORS } from 'data';
 
 
 const starGeometry = new TetrahedronGeometry(1, 0);
-
-const COLORS = [
-  "#FCBC05",
-  "#4385F5",
-  "#E5443F",
-  "#34A853",
-];
 
 export default class Stars extends Mesh {
   override material: ShaderMaterial;

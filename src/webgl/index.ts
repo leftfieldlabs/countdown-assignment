@@ -2,6 +2,7 @@ import { Scene, Clock, Camera } from 'three';
 import MainScene from "./scenes/MainScene";
 import Renderer from './Renderer';
 import BaseScene from './scenes/BaseScene';
+import { COLORS } from 'data';
 
 // TODO 2023-11-26 jeremboo: Create data/enum.ts
 export enum Scenes {
@@ -21,6 +22,12 @@ class Webgl {
   constructor(canvas: HTMLCanvasElement, sceneId = Scenes.Main) {
     this.currentScene = this.scenes[sceneId];
     this.renderer = new Renderer(canvas, this.currentScene);
+
+    // TODO 2023-11-27 jeremboo: Put that into the store
+    document.addEventListener('click', () => {
+      const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+      document.body.style.backgroundColor = randomColor;
+    });
   }
 
   switchScene(sceneId: Scenes) {
