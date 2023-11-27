@@ -1,6 +1,6 @@
 import { atom, onMount } from 'nanostores';
 
-export const mousePosition = atom({ x: 0, y: 0 });
+export const mousePosition = atom({ x: window.innerWidth * 0.5, y: window.innerHeight * 0.5 });
 
 onMount(mousePosition, () => {
   const handleMouseMove = (e) => {

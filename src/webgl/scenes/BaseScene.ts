@@ -1,4 +1,4 @@
-import { Scene, PerspectiveCamera, Light, AmbientLight, DirectionalLight } from 'three';
+import { Scene, PerspectiveCamera, Light, AmbientLight, DirectionalLight, Vector3 } from 'three';
 import { Scenes } from 'webgl';
 import CameraMouseControl from 'webgl/utils/CameraMouseControl';
 
@@ -11,11 +11,13 @@ export default class BaseScene extends Scene {
     directional: new DirectionalLight(0xffffff, 0.5)
   }
 
-  constructor(sceneId: Scenes) {
+  constructor(sceneId: Scenes, {
+    cameraPosition = new Vector3(0, 0, 5)
+  } = {}) {
     super();
     this.sceneId = sceneId;
     this.camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-    this.camera.position.set(0, 0, 5);
+    this.camera.position.copy(cameraPosition);
     this.cameraMouseControl = new CameraMouseControl(this.camera);
     this.add(this.lights.ambient);
     this.add(this.lights.directional);

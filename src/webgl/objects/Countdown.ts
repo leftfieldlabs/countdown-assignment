@@ -11,7 +11,7 @@ const PROPS = {
   animateIn : {
     delay: 2,
     duration: 4,
-    ease: 'elastic.out(0.4, 0.2)'
+    ease: 'elastic.out(0.4, 0.15)'
   }
 };
 
@@ -36,7 +36,8 @@ export default class CountDown extends Object3D {
       uniforms: {
         twistStrength: { value: 0.8 },
         twistProgression: { value: Math.PI },
-        fontColor: { value: new Color(0xBCBCBC) }
+        fontColor: { value: new Color(0x202124) },
+        opacity: { value: 0 }
       },
       vertexShader:`
         uniform float twistStrength;
@@ -59,11 +60,12 @@ export default class CountDown extends Object3D {
 
         uniform sampler2D tDiffuse;
         uniform vec3 fontColor;
+        uniform float opacity;
 
         varying vec2 vUv;
 
         void main() {
-          gl_FragColor = vec4(fontColor, 1.);
+          gl_FragColor = vec4(fontColor, opacity);
         }
       `
     })
@@ -76,20 +78,18 @@ export default class CountDown extends Object3D {
   }
 
   handleTimeLeft = ({ years, days, hours, min, sec, millisec }) => {
-    this.text.text = `${addLeadingZeros(days)} Days
-${addLeadingZeros(hours)}:${addLeadingZeros(min)}:${addLeadingZeros(sec)}`
+    this.text.text = `Google I/O 2024
+${addLeadingZeros(days)}:${addLeadingZeros(hours)}:${addLeadingZeros(min)}:${addLeadingZeros(sec)}`
     this.text.sync();
   }
 
   animateIn() {
+    gsap.set(this.text.material.uniforms.opacity, { value: 1, delay: PROPS.animateIn.delay });
     gsap.to(this.text.material.uniforms.twistProgression, { value : 0, ...PROPS.animateIn })
     gsap.to(this.text.material.uniforms.twistStrength, { value : 0, ...PROPS.animateIn })
-
-
   }
 
   update() {
     // this.text.material.uniforms.twistProgression.value += 0.1;
-
   }
 }

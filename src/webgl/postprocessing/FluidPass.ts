@@ -10,14 +10,14 @@ export default class FluidPass extends ShaderPass {
       uniforms: {
         'tDiffuse': { value: null }
       },
-      vertexShader: /* glsl */`
+      vertexShader:`
         varying vec2 vUv;
         void main() {
           vUv = uv;
           gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
         }
       `,
-      fragmentShader:  /* glsl */`
+      fragmentShader: `
         #include <common>
         uniform sampler2D tDiffuse;
         varying vec2 vUv;

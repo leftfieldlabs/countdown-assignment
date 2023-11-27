@@ -41,6 +41,7 @@ class Webgl {
   async load() {
     // TODO 2023-11-26 jeremboo:
     await this.currentScene.load();
+    this.currentScene.animateIn();
   }
 
   start() {

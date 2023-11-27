@@ -8,6 +8,13 @@ import InstancedGeom from './InstancedGeom';
 
 const starGeometry = new TetrahedronGeometry(1, 0);
 
+const COLORS = [
+  "#FCBC05",
+  "#4385F5",
+  "#E5443F",
+  "#34A853",
+];
+
 export default class Stars extends Mesh {
   override material: ShaderMaterial;
   speed = 0;
@@ -16,10 +23,12 @@ export default class Stars extends Mesh {
   constructor(nbrOfStars = 300, {
     depthWrite = true,
     opacity = 0.75,
-    scalarMin = 2,
-    scalarMax = 10,
+    distMin = 2,
+    distMax = 10,
     rotation = 0,
     speed = 0.01,
+    scaleMin = 0.03,
+    scaleMax = 0.05,
   } = {}) {
     const instancedStars = new InstancedGeom(starGeometry, nbrOfStars);
 
@@ -28,18 +37,21 @@ export default class Stars extends Mesh {
     const scaleAttribute = instancedStars.createAttribute('_scale', 1);
     const rotationAttribute = instancedStars.createAttribute('_rotation', 1);
     const opacityAttribute = instancedStars.createAttribute('_opacity', 1);
+    const colorAttribute = instancedStars.createAttribute('_color', 3);
 
     for (let i = 0; i < nbrOfStars; i++) {
-      const scalar = getRandomFloat(scalarMin, scalarMax);
+      const scalar = getRandomFloat(distMin, distMax);
       positionAttribute.setXYZ(
         i,
         Math.random() * Math.sign(Math.random() - 0.5) * scalar,
         Math.random() * Math.sign(Math.random() - 0.5) * scalar,
         Math.random() * Math.sign(Math.random() - 0.5) * scalar
       );
-      scaleAttribute.setX(i, getRandomFloat(0.03, 0.05));
+      scaleAttribute.setX(i, getRandomFloat(scaleMin, scaleMax));
       rotationAttribute.setX(i, Math.PI * Math.random() * 2);
       opacityAttribute.setX(i, Math.random() * opacity);
+      const c = new Color(COLORS[Math.floor(Math.random() * COLORS.length)]);
+      colorAttribute.setXYZ(i, c.r, c.g, c.b);
     }
 
     // Material
@@ -54,10 +66,12 @@ export default class Stars extends Mesh {
         attribute vec3 _position;
         attribute float _rotation;
         attribute float _opacity;
+        attribute vec3 _color;
 
         uniform float time;
 
         varying float vOpacity;
+        varying vec3 vColor;
 
         ${scale}
         ${rotate}
@@ -74,6 +88,7 @@ export default class Stars extends Mesh {
           transformed += _position;
 
           vOpacity = _opacity;
+          vColor = _color;
 
           #include <project_vertex>
         }
@@ -84,9 +99,10 @@ export default class Stars extends Mesh {
         uniform float time;
 
         varying float vOpacity;
+        varying vec3 vColor;
 
         void main() {
-          gl_FragColor = vec4(color, vOpacity);
+          gl_FragColor = vec4(color * vColor, vOpacity);
         }
       `,
       transparent: true
