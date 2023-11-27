@@ -1,4 +1,15 @@
+
+
+:root {
+  --color-main: #aaaaaa;
+  --color-secondary: #ffffff;
+  --color-background: #031927;
+}
 body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--color-background);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -10,4 +21,20 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+.f {
+  position: fixed;
+  bottom: 5px;
+  right: 15px;
+  font-family: 'Arial';
+  font-size: 0.7rem;
+  color: var(--color-main);
+  text-align: center;
+}
+
+a {
+  font-size: 0.8rem;
+  color: var(--color-secondary);
 }
