@@ -1,5 +1,7 @@
 import './App.css';
 import './style/Countdown.css';
+import './style/Webgl.css';
+
 import Countdown from './components/Countdown';
 
 function App() {
@@ -9,7 +11,7 @@ function App() {
         <h1>Countdown</h1>
       </header>
       <div className="content">
-        <Countdown date='2020-12-24T00:00:00' />,
+        <Countdown />,
       </div>
     </div>
   );
