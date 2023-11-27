@@ -23,7 +23,7 @@ export default class FluidPass extends ShaderPass {
       uniforms: {
         tDiffuse: { value: null },
         tResolution: { value: new Vector2(window.innerWidth, window.innerHeight) },
-        tMousePosition: { value: new Vector2() },
+        tMousePosition: { value: new Vector2(window.innerWidth, window.innerHeight) },
         tMouseDirection: { value: new Vector2() },
         tMouseStrength: { value: 0 },
         tMouseScale: { value: 0.002 },
