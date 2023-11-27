@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": "./src",
+    "allowJs": true,
+    // "paths": {
+    //   "~components/*": ["components/*"],
+    //   "~data/*": ["data/*"],
+    //   "~store/*": ["store/*"],
+    //   "~styles/*": ["styles/*"],
+    //   "~utils/*": ["utils/*"],
+    //   "~webgl/*": ["webgl/*"]
+    // }
+  }
+}

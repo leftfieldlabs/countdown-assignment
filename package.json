@@ -2,13 +2,24 @@
   "name": "countdown",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://jeremieboulay.fr/LFL-assessment",
   "dependencies": {
+    "@nanostores/react": "^0.7.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.0",
+    "@types/jest": "^29.5.10",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.38",
+    "@types/react-dom": "^18.2.17",
+    "gsap": "^3.12.2",
+    "nanostores": "^0.9.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1",
+    "three": "^0.158.0",
+    "troika-three-text": "^0.49.0",
+    "typescript": "^5.3.2",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
@@ -34,5 +45,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tweakpane/core": "^2.0.1",
+    "@types/three": "^0.158.3",
+    "i": "^0.3.7",
+    "npm": "^10.2.4",
+    "tweakpane": "^4.0.1"
   }
 }
