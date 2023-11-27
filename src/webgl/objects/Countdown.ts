@@ -4,10 +4,12 @@ import { Color, Object3D, ShaderMaterial } from 'three';
 import { Text } from 'troika-three-text';
 import { addLeadingZeros } from 'utils';
 import { horizontalTwist } from 'utils/glsl';
+import pane from 'webgl/utils/pane';
 
 
 const PROPS = {
   fontsize: 0.6,
+  fontColor: '#202124',
   animateIn : {
     delay: 2,
     duration: 4,
@@ -38,7 +40,7 @@ export default class CountDown extends Object3D {
       uniforms: {
         twistStrength: { value: 0.8 },
         twistProgression: { value: Math.PI },
-        fontColor: { value: new Color(0x202124) },
+        fontColor: { value: new Color(PROPS.fontColor) },
         opacity: { value: 0 }
       },
       vertexShader:`
@@ -75,6 +77,10 @@ export default class CountDown extends Object3D {
     this.text.sync();
 
     timeLeft.subscribe(this.handleTimeLeft);
+
+    pane.addBinding(PROPS, 'fontColor').on('change', () => {
+      this.text.material.uniforms.fontColor.value = new Color(PROPS.fontColor);
+    });
 
     this.animateIn();
   }

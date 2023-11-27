@@ -46,6 +46,10 @@
     ]
   },
   "devDependencies": {
-    "@types/three": "^0.158.3"
+    "@tweakpane/core": "^2.0.1",
+    "@types/three": "^0.158.3",
+    "i": "^0.3.7",
+    "npm": "^10.2.4",
+    "tweakpane": "^4.0.1"
   }
 }

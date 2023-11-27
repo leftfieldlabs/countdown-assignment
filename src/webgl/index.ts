@@ -24,7 +24,7 @@ class Webgl {
     this.renderer = new Renderer(canvas, this.currentScene);
 
     // TODO 2023-11-27 jeremboo: Put that into the store
-    document.addEventListener('click', () => {
+    canvas.addEventListener('click', () => {
       const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
       document.body.style.backgroundColor = randomColor;
     });

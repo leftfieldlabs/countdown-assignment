@@ -4,6 +4,7 @@ import { mousePosition } from 'store/mouseMove';
 import { Vector2 } from "three";
 import { drawRadialGradient } from "utils/glsl";
 import { PIXEL_RATIO } from "webgl/Renderer";
+import pane from "webgl/utils/pane";
 
 const PROPS = {
   velocity: 0.05,
@@ -26,6 +27,7 @@ export default class FluidPass extends ShaderPass {
         tMouseDirection: { value: new Vector2() },
         tMouseStrength: { value: 0 },
         tMouseScale: { value: 0.002 },
+        tMouseDistortion: { value: 0.001 }
       },
       vertexShader:`
         varying vec2 vUv;
@@ -43,6 +45,7 @@ export default class FluidPass extends ShaderPass {
         uniform vec2 tMouseDirection;
         uniform float tMouseStrength;
         uniform float tMouseScale;
+        uniform float tMouseDistortion;
 
         varying vec2 vUv;
 
@@ -55,13 +58,16 @@ export default class FluidPass extends ShaderPass {
             distance * tMouseDirection.y
           );
 
-          vec2 customUv = vUv + tMouseStrength * directionalDistance * 0.001;
+          vec2 customUv = vUv + tMouseStrength * directionalDistance * tMouseDistortion;
           vec4 texel = texture2D(tDiffuse, customUv);
           // texel.xyz += distance * tMouseStrength * 10.;
           gl_FragColor = texel;
         }
       `
     });
+
+    pane.addBinding(this.material.uniforms.tMouseScale, 'value', { min: 0.001, max: 0.005, label: "mouseScale" })
+    pane.addBinding(this.material.uniforms.tMouseDistortion, 'value', { min: 0, max: 0.01, label: "mouseDistortion" })
 
     mousePosition.subscribe(this.handleMouseMove);
   }

@@ -1,6 +1,7 @@
 import { Camera, Vector2, Vector3 } from 'three';
 
 import { mousePosition } from 'store/mouseMove';
+import pane from './pane';
 
 // https://github.com/Jeremboo/scribble-lab/blob/master/modules/CameraMouseControl.js
 export default class CameraMouseControl {
@@ -28,9 +29,12 @@ export default class CameraMouseControl {
     this.initialPosition.copy(this.position);
 
     mousePosition.subscribe(this.handleMouseMove);
+
+    pane.addBinding(this.mouseMove, 'x', { min: 0, max: 5, label: "parallaxX" }).on('change', () => this.handleMouseMove());
+    pane.addBinding(this.mouseMove, 'y', { min: 0, max: 5, label: "parallaxY" }).on('change', () => this.handleMouseMove());
   }
 
-  handleMouseMove = ({ x, y }) => {
+  handleMouseMove = ({ x, y } = this.mousePosition) => {
     this.mousePosition.set(x, y);
     this.position.x = this.initialPosition.x + ((this.mousePosition.x / this.width) - 0.5) * this.mouseMove.x;
     this.position.y = this.initialPosition.y - ((this.mousePosition.y / this.height) - 0.5) * this.mouseMove.y;
