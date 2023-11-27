@@ -21,3 +21,16 @@ export const scale = `
     );
   }
 `;
+
+export const horizontalTwist = `
+  vec4 horizontalTwist(vec4 pos, float t) {
+    float st = sin(t);
+    float ct = cos(t);
+
+    vec4 new_pos = pos;
+    new_pos.z = pos.z * ct - pos.y * st;
+    new_pos.y = pos.z * st + pos.y * ct;
+
+    return(new_pos);
+  }
+`;
