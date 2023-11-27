@@ -1,4 +1,4 @@
-import { Scene, Clock, PerspectiveCamera } from 'three';
+import { Scene, Clock, Camera } from 'three';
 import MainScene from "./scenes/MainScene";
 import Renderer from './Renderer';
 import BaseScene from './scenes/BaseScene';
@@ -19,8 +19,8 @@ class Webgl {
   currentScene: BaseScene
 
   constructor(canvas: HTMLCanvasElement, sceneId = Scenes.Main) {
-    this.renderer = new Renderer(canvas);
     this.currentScene = this.scenes[sceneId];
+    this.renderer = new Renderer(canvas, this.currentScene);
   }
 
   switchScene(sceneId: Scenes) {
@@ -73,8 +73,8 @@ class Webgl {
     this.rafId = requestAnimationFrame(this.update);
   }
 
-  render(scene: Scene, camera: PerspectiveCamera) {
-    this.renderer.render(scene, camera);
+  render(scene: Scene, camera: Camera) {
+    this.renderer.update();
   }
 
   /*
