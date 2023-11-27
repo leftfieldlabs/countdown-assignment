@@ -34,3 +34,10 @@ export const horizontalTwist = `
     return(new_pos);
   }
 `;
+
+export const drawRadialGradient = `
+  float drawRadialGradient(vec2 center, vec2 currentPosition, float scale) {
+    float dist = distance(currentPosition, center) * scale;
+    return 1.0 - min(1.0, dist);
+  }
+`;

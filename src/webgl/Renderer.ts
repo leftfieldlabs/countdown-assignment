@@ -15,6 +15,7 @@ export default class Renderer extends WebGLRenderer {
   composer: EffectComposer;
   aspectRatio: number;
   renderPass: RenderPass;
+  fluidPass: FluidPass;
 
 
   constructor(canvas: HTMLCanvasElement, scene: BaseScene) {
@@ -22,11 +23,14 @@ export default class Renderer extends WebGLRenderer {
     this.canvas = canvas;
     this.setPixelRatio(PIXEL_RATIO);
     this.setClearColor(0xFFFFFF, 0);
+
+    // TODO 2023-11-27 jeremboo: Create overwritten class of EffectComposed to manage the passes
     this.composer = new EffectComposer(this);
     this.composer.setPixelRatio(PIXEL_RATIO);
     this.renderPass = new RenderPass(scene, scene.camera);
     this.composer.addPass(this.renderPass);
-    this.composer.addPass(new FluidPass());
+    this.fluidPass = new FluidPass();
+    this.composer.addPass(this.fluidPass);
     this.composer.addPass(new OutputPass());
   }
 
@@ -39,6 +43,7 @@ export default class Renderer extends WebGLRenderer {
     this.canvas.width = width;
     this.canvas.height = height;
     this.setSize(width, height, false);
+    this.fluidPass.resize(width, height);
     this.composer.setSize(width, height);
 
     this.aspectRatio = width / height;
@@ -46,6 +51,7 @@ export default class Renderer extends WebGLRenderer {
   }
 
   update = () => {
+    this.fluidPass.update();
     this.composer.render();
   }
 }
