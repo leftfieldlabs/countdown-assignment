@@ -29,7 +29,7 @@ class Webgl {
 
   resize(width: number, height: number) {
     const aspectRatio = this.renderer.resize(width, height);
-    this.currentScene.resize(aspectRatio);
+    this.currentScene.resize(width, height, aspectRatio);
   }
 
   /*

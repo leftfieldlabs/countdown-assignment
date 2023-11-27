@@ -1,6 +1,6 @@
 import { BoxGeometry, Mesh, MeshStandardMaterial } from "three"
 
-const SPEED = 0.01;;
+const SPEED = 0.001;
 
 export default class Cube extends Mesh {
 

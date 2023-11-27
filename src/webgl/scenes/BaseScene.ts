@@ -1,9 +1,11 @@
 import { Scene, PerspectiveCamera, Light, AmbientLight, DirectionalLight } from 'three';
 import { Scenes } from 'webgl';
+import CameraMouseControl from 'webgl/utils/CameraMouseControl';
 
 export default class BaseScene extends Scene {
   sceneId: Scenes;
   camera: PerspectiveCamera;
+  cameraMouseControl: CameraMouseControl;
   lights: { [key in string]: Light } = {
     ambient: new AmbientLight(0xffffff, 0.5),
     directional: new DirectionalLight(0xffffff, 0.5)
@@ -14,11 +16,13 @@ export default class BaseScene extends Scene {
     this.sceneId = sceneId;
     this.camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     this.camera.position.set(0, 0, 5);
+    this.cameraMouseControl = new CameraMouseControl(this.camera);
     this.add(this.lights.ambient);
     this.add(this.lights.directional);
   }
 
-  resize = (aspectRatio: number) => {
+  resize = (width: number, height: number, aspectRatio: number) => {
+    this.cameraMouseControl.resize(width, height)
     this.camera.aspect = aspectRatio;
     this.camera.updateProjectionMatrix();
   }
@@ -75,5 +79,7 @@ export default class BaseScene extends Scene {
    * * *******************
    */
 
-  update(delta: number) {}
+  update(delta: number) {
+    this.cameraMouseControl.update();
+  }
 }

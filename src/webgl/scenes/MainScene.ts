@@ -14,6 +14,7 @@ export default class MainScene extends BaseScene {
   }
 
   update(delta: number): void {
+    super.update(delta);
     this.cube?.update();
   }
 }
