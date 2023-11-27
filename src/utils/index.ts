@@ -41,3 +41,5 @@ export const addLeadingZeros = (value) => {
   }
   return value;
 }
+
+export const getRandomFloat = (min, max) => (Math.random() * (max - min) + min);
